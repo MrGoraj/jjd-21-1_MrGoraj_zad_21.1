@@ -17,11 +17,11 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product formProduct, Model model) {
-        if (checkNotEmpty(formProduct)) {
+        if (productRepository.checkNotEmpty(formProduct)) {
             model.addAttribute("formProduct", formProduct);
             return "success";
         } else {
-            return "redirect:sorry";
+            return "sorry";
         }
     }
 
@@ -30,20 +30,14 @@ public class ProductController {
         return "sorry";
     }
 
-    private boolean checkNotEmpty(Product product) {
-        return (product.getName() != null && product.getName().length() > 0
-                && product.getPrice() > 0
-                && product.getCategory() != null);
-    }
-
-    @ResponseBody
-    @RequestMapping("/list")
-    public String list() {
+    @RequestMapping("/lista")
+    public String lista(Model model) {
         List<Product> productList = productRepository.getAll();
-        StringBuilder result = new StringBuilder();
+        model.addAttribute("productList", productList);
+        double sum = 0;
         for (Product product : productList) {
-            result.append(product);
+            sum += product.getPrice();
         }
-        return result.toString();
+        return "list";
     }
 }
