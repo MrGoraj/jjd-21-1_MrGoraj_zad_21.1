@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaStart Bootcamp - Zadanie 21.1</title>
+</head>
+<body>
+
+<ul th:each="product: ${productList}">
+    <li th:text="|${product.name} ${product.price} ${product.category}|"></li>
+</ul>
+
+<br />
+
+
+</body>
+</html>
